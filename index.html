@@ -1,0 +1,35 @@
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Access</title>
+</head>
+<body>
+    <video id="videoElement" width="640" height="480" autoplay playsinline></video>
+    <br>
+    <button onclick="openCamera()">Open Camera</button>
+
+    <script>
+        function openCamera() {
+            const videoElement = document.getElementById('videoElement');
+            
+            // Check if browser supports mediaDevices API
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Request access to the camera
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        // Display the video stream in the video element
+                        videoElement.srcObject = stream;
+                        document.querySelector('button').textContent = 'Camera Opened';
+                    })
+                    .catch(function(error) {
+                        console.error('Error accessing camera:', error);
+                        alert('Error accessing camera: ' + error.message);
+                    });
+            } else {
+                alert('Your browser does not support camera access.');
+            }
+        }
+    </script>
+</body>
+</html>
